@@ -75,8 +75,9 @@ Config {
 			     ] 100
 
         -- time and date indicator 
-        --   (%F = y-m-d date, %a = day of week, %T = h:m:s time)
-        , Run Date           "<fc=#DAD8A7>%F (%a) %r</fc>" "date" 10
+        --   (%a = day of week, %b = abbreviated month name, %d = date, 
+	--   %y = year with century, %r = h:m:s with AM/PM time)
+        , Run Date           "<fc=#DAD8A7>%a, %b %-d, %Y | %r</fc>" "date" 10
 
 	-- status about which layout and workspace
 	, Run StdinReader
