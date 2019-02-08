@@ -109,7 +109,7 @@ myPP h = xmobarPP
   }
 
 -- WORKSPACES --
-myWorkspaces = ["1","2"] ++ map show [3..9]
+myWorkspaces = ["1","2","3"] ++ map show [4..9]
   
 -- MANAGE HOOKS --
 -- 
@@ -124,7 +124,8 @@ myManageHook = composeAll
     , className =? "Unity-2d-launcher" 	--> doIgnore
 -- more hooks:
     , className =? "Caprine"		--> doShift (myWorkspaces !! 1)
-    , className =? "Slack"		--> doShift (myWorkspaces !! 1)
+    -- Spotify sets their WM_CLASS after startup
+    , className =? ""		--> doShift (myWorkspaces !! 2)
     ]
 
 -- THE MAIN THING THAT DOES THE THING --
