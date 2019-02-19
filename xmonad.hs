@@ -1,3 +1,5 @@
+{-# LANGUAGE FlexibleInstances, MultiParamTypeClasses #-}
+
 import XMonad
 import XMonad.Config.Gnome
 -- keybindings
@@ -21,6 +23,9 @@ import qualified XMonad.StackSet as W
 import Control.Monad
 import Data.Monoid (All (All))
 
+
+
+import Control.Arrow ((***), second)
 -- dconf write /org/gnome/gnome-panel/layout/toplevel-id-list "['']"
 -- To get the top panel back, run:
 -- dconf write /org/gnome/gnome-panel/layout/toplevel-id-list "['top-panel']"
@@ -50,7 +55,19 @@ myLayout = avoidStruts
 		)
 	where
 	  name n = renamed [Replace n]
-	  tiled = Tall 1 (2/100) (1/2)
+	  tiled = Flip (Tall 1 (2/100) (1/2))
+
+-- From https://gist.github.com/hallettj/1988598
+-- | Flip a layout, compute its 180 degree rotated form.
+newtype Flip l a = Flip (l a) deriving (Show, Read)
+
+instance LayoutClass l a => LayoutClass (Flip l) a where
+    runLayout (W.Workspace i (Flip l) ms) r = (map (second flipRect) *** fmap Flip)
+                                                `fmap` runLayout (W.Workspace i l ms) (flipRect r)
+                                         where screenWidth = fromIntegral $ rect_width r
+                                               flipRect (Rectangle rx ry rw rh) = Rectangle (screenWidth - rx - (fromIntegral rw)) ry rw rh
+    handleMessage (Flip l) = fmap (fmap Flip) . handleMessage l
+    description (Flip l) = "Flip "++ description l
 
 -- Colors for text and backgrounds of each tab when in "Tabbed" layout.
 tabConfig = defaultTheme {
@@ -76,8 +93,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) =
 	 , ((modm .|. shiftMask , xK_r) , spawn "gnome-session-quit --reboot")
 
 	 -- Swaps the master window expand/shrink to correlate with reflected master
-	 , ((modm , xK_h)		, sendMessage Expand)
-	 , ((modm , xK_l)		, sendMessage Shrink)
+	 , ((modm , xK_l)		, sendMessage Expand)
+	 , ((modm , xK_h)		, sendMessage Shrink)
 
 	 -- Power management shit
 	 , ((modm .|. shiftMask, xK_l)  , spawn "~/.local/bin/i3lock-plant")
