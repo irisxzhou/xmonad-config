@@ -140,9 +140,10 @@ myManageHook = composeAll
     , className =? "Unity-2d-panel" 	--> doIgnore
     , className =? "Unity-2d-launcher" 	--> doIgnore
 -- more hooks:
-    , className =? "Caprine"		--> doShift (myWorkspaces !! 1)
+    , className =? "Caprine"        --> doShift (myWorkspaces !! 1)
+    , className =? "discord"     --> doShift (myWorkspaces !! 1)
     -- Spotify sets their WM_CLASS after startup
-    , className =? ""		--> doShift (myWorkspaces !! 2)
+    , className =? ""               --> doShift (myWorkspaces !! 2)
     ]
 
 -- THE MAIN THING THAT DOES THE THING --
