@@ -9,7 +9,6 @@ import XMonad.Layout.Fullscreen
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Renamed
 import XMonad.Layout.Tabbed
-import ReflectSilent
 import XMonad.Layout.PerWorkspace
 -- hooks
 import XMonad.Util.Run
@@ -49,25 +48,13 @@ myHooks = manageDocks <+>
 -- LAYOUT MANAGEMENT --
 myLayout = avoidStruts
 		( 
-	       reflectHoriz $ name "[ | ]" tiled
+	       name "[ | ]" tiled
 	   ||| noBorders (fullscreenFull (name "[   ]" Full))
 	   ||| name "[===]" (tabbed shrinkText tabConfig)
 		)
 	where
 	  name n = renamed [Replace n]
-	  tiled = Flip (Tall 1 (2/100) (1/2))
-
--- From https://gist.github.com/hallettj/1988598
--- | Flip a layout, compute its 180 degree rotated form.
-newtype Flip l a = Flip (l a) deriving (Show, Read)
-
-instance LayoutClass l a => LayoutClass (Flip l) a where
-    runLayout (W.Workspace i (Flip l) ms) r = (map (second flipRect) *** fmap Flip)
-                                                `fmap` runLayout (W.Workspace i l ms) (flipRect r)
-                                         where screenWidth = fromIntegral $ rect_width r
-                                               flipRect (Rectangle rx ry rw rh) = Rectangle (screenWidth - rx - (fromIntegral rw)) ry rw rh
-    handleMessage (Flip l) = fmap (fmap Flip) . handleMessage l
-    description (Flip l) = "Flip "++ description l
+	  tiled = Tall 1 (2/100) (1/2)
 
 -- Colors for text and backgrounds of each tab when in "Tabbed" layout.
 tabConfig = defaultTheme {
@@ -97,7 +84,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) =
 	 , ((modm , xK_h)		, sendMessage Shrink)
 
 	 -- Power management shit
-	 , ((modm .|. shiftMask, xK_l)  , spawn "~/.local/bin/i3lock-plant")
+	 -- , ((modm .|. shiftMask, xK_l)  , spawn "~/.local/bin/i3lock-plant")
              ]
 -- Takes the union of default keys and custom keys, with custom keys
 -- having the ability to override defaults
@@ -126,7 +113,7 @@ myPP h = xmobarPP
   }
 
 -- WORKSPACES --
-myWorkspaces = ["1","2","3"] ++ map show [4..9]
+myWorkspaces = map show [1..9]
   
 -- MANAGE HOOKS --
 -- 
@@ -140,6 +127,8 @@ myManageHook = composeAll
     , className =? "Unity-2d-panel" 	--> doIgnore
     , className =? "Unity-2d-launcher" 	--> doIgnore
 -- more hooks:
+
+    -- Messaging goes to workspace 2
     , className =? "Caprine"        --> doShift (myWorkspaces !! 1)
     , className =? "discord"     --> doShift (myWorkspaces !! 1)
     -- Spotify sets their WM_CLASS after startup
