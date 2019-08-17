@@ -131,6 +131,7 @@ myManageHook = composeAll
     -- Messaging goes to workspace 2
     , className =? "Caprine"        --> doShift (myWorkspaces !! 1)
     , className =? "discord"     --> doShift (myWorkspaces !! 1)
+    , className =? "Signal"     --> doShift (myWorkspaces !! 1)
     -- Spotify sets their WM_CLASS after startup
     , className =? ""               --> doShift (myWorkspaces !! 2)
     ]
