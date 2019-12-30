@@ -56,7 +56,7 @@ myLayout = avoidStruts
 	  name n = renamed [Replace n]
 	  tiled = Tall 1 (2/100) (1/2)
 
--- Colors for text and backgrounds of each tab when in "Tabbed" layout.
+-- Colors for text and backgrounds of each tab when in "Tabbed" layoqhttps://www.cs.hmc.edu/clinic/2019/descriptions/projects_08_10_19/microsoft1920.pdfut.
 tabConfig = defaultTheme {
     activeBorderColor = cPink,
     activeTextColor = cPink,
@@ -132,8 +132,13 @@ myManageHook = composeAll
     , className =? "Caprine"        --> doShift (myWorkspaces !! 1)
     , className =? "discord"     --> doShift (myWorkspaces !! 1)
     , className =? "Signal"     --> doShift (myWorkspaces !! 1)
+    , className =? "Slack"     --> doShift (myWorkspaces !! 1)
+
     -- Spotify sets their WM_CLASS after startup
     , className =? ""               --> doShift (myWorkspaces !! 2)
+
+    -- Steam to workspace 4
+    , className =? "Steam"               --> doShift (myWorkspaces !! 3)
     ]
 
 -- THE MAIN THING THAT DOES THE THING --
