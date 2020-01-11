@@ -146,7 +146,7 @@ main = do
   h <- spawnPipe myXMob
   xmonad $ gnomeConfig
     { terminal    		= "gnome-terminal"
-    , modMask     		= mod4Mask -- use Windows key to play well with emacs
+    , modMask     		= mod1Mask
     , focusFollowsMouse 	= False 
     , borderWidth 		= 1
     , normalBorderColor 	= "#000000"
