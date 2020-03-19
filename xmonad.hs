@@ -39,7 +39,7 @@ cCoral	= "#FF3D7F"
 -- LAUNCHER --
 -- Note: the cache for yeganesh is stored in ~/.local/share/yeganesh
 -- 	 so if an entry needs to be forgotten, that's where to go to delete it
-myLauncher = "$(yeganesh -x -- -nb black -fn inconsolata:size=10 -nf \\#DAD8A7 -sb black -sf \\#3FB8AF)"
+myLauncher = "$(yeganesh -x -- -nb black -fn sourcecodepro-regular:size=10 -nf \\#DAD8A7 -sb black -sf \\#3FB8AF)"
 
 -- MANAGE HOOKS --
 myHooks = manageDocks <+>
@@ -56,7 +56,7 @@ myLayout = avoidStruts
 	  name n = renamed [Replace n]
 	  tiled = Tall 1 (2/100) (1/2)
 
--- Colors for text and backgrounds of each tab when in "Tabbed" layoqhttps://www.cs.hmc.edu/clinic/2019/descriptions/projects_08_10_19/microsoft1920.pdfut.
+-- Colors for text and backgrounds of each tab when in "Tabbed" layout.
 tabConfig = defaultTheme {
     activeBorderColor = cPink,
     activeTextColor = cPink,
