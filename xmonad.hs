@@ -83,12 +83,16 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) =
 	 , ((modm , xK_l)		, sendMessage Expand)
 	 , ((modm , xK_h)		, sendMessage Shrink)
 
-	 -- Power management shit
+     -- Change xmonad restart command to play nicer with emacs - now uses meta (Windows) key
+     , ((mod4Mask , xK_q)   , spawn "if type xmonad; then xmonad --recompile && xmonad --restart; else xmessage xmonad not in \\$PATH: \"$PATH\"; fi") -- %! Restart xmonad
 	 -- , ((modm .|. shiftMask, xK_l)  , spawn "~/.local/bin/i3lock-plant")
              ]
 -- Takes the union of default keys and custom keys, with custom keys
 -- having the ability to override defaults
-newKeys x = M.union (M.fromList (myKeys x)) (keys defaultConfig x)
+
+-- Deletes mod-q as dynamic restart (which is a default keybinding), 
+-- so that it can be used in emacs
+newKeys x = M.delete (mod1Mask, xK_q) (M.union (M.fromList (myKeys x)) (keys defaultConfig x))
 
 -- CUSTOM MOUSEBINDINGS --
 myMouse (XConfig {XMonad.modMask = modm}) = M.fromList $
