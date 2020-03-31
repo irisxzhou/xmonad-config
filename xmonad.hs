@@ -137,6 +137,7 @@ myManageHook = composeAll
     , className =? "discord"     --> doShift (myWorkspaces !! 1)
     , className =? "Signal"     --> doShift (myWorkspaces !! 1)
     , className =? "Slack"     --> doShift (myWorkspaces !! 1)
+    , className =? "Microsoft Teams - Preview"     --> doShift (myWorkspaces !! 1)
 
     -- Spotify sets their WM_CLASS after startup
     , className =? ""               --> doShift (myWorkspaces !! 2)
